@@ -7,23 +7,23 @@ from .models import Todo
 from .serializers import TodoSerializer
 # Create your views here.
 
-class Home(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        content = {'message': 'Hello, World!'}
-        return Response(content)
-    
-
-        serializer_class = TodoSerializer
 
 class TodoListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        # Filter the queryset to include only todo items of the current user
+        return Todo.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        # Automatically set the user field to the current authenticated user
+        serializer.save(user=self.request.user)
     
 class TodoRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        # Filter the queryset to include only todo items of the current user
+        return Todo.objects.filter(user=self.request.user)

@@ -16,7 +16,6 @@ Including another URLconf
 """
 
 from django.urls import path
-from .views import Home
 from .views import TodoListCreateAPIView, TodoRetrieveUpdateDestroyAPIView
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -37,7 +36,6 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('', Home.as_view()),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('todos/', TodoListCreateAPIView.as_view(), name='todo-list-create'),
     path('todos/<int:pk>/', TodoRetrieveUpdateDestroyAPIView.as_view(), name='todo-retrieve-update-destroy'),
