@@ -15,7 +15,7 @@ Installation Steps
 git clone https://github.com/yourusername/django-rest-todo.git
 
 2. Navigate to the project directory:
-cd django-rest-todo
+cd ToDo
 
 3.Create a virtual environment (optional but recommended):
 python3 -m venv venv
